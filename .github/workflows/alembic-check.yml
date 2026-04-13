@@ -1,0 +1,62 @@
+name: alembic-check
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  alembic:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: render_factory
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d render_factory"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/render_factory
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Assert Alembic graph
+        run: |
+          python - <<'PY'
+          from alembic.config import Config
+          from alembic.script import ScriptDirectory
+
+          cfg = Config("alembic.ini")
+          script = ScriptDirectory.from_config(cfg)
+          heads = script.get_heads()
+          assert heads == ["20260412_9999"], heads
+          revs = {r.revision for r in script.walk_revisions()}
+          assert "20260412_0025" in revs, "missing 20260412_0025"
+          print("Alembic graph OK")
+          PY
+
+      - name: Run Alembic heads
+        run: python -m alembic -c alembic.ini heads

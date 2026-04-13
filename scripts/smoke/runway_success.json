@@ -1,0 +1,8 @@
+{
+  "type": "task.completed",
+  "id": "evt_runway_1",
+  "taskId": "task_runway_1",
+  "status": "SUCCEEDED",
+  "output": ["https://cdn.example.com/runway.mp4"],
+  "thumbnailUrl": "https://cdn.example.com/runway.jpg"
+}

@@ -1,0 +1,1 @@
+TEMPLATE SCORING + PERFORMANCE MEMORY ENGINE\n\nImported as guidance/spec companion for future quality loop and ranking layer.\n

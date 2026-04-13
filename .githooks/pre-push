@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+changed_files="$(git diff --name-only origin/HEAD...HEAD || true)"
+
+if echo "${changed_files}" | grep -E '^backend/(alembic|app/models|app/db)/' >/dev/null 2>&1; then
+  echo "[pre-push] Migration-related files changed. Running PR guard..."
+  (cd backend && bash scripts/migration_pr_guard.sh)
+else
+  echo "[pre-push] No migration-related files changed."
+fi

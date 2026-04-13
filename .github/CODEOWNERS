@@ -1,0 +1,8 @@
+# Replace these placeholders with real GitHub usernames or teams
+/backend/** @your-org/backend-owners
+/frontend/** @your-org/frontend-owners
+/e2e/** @your-org/qa-owners
+/edge/** @your-org/platform-owners
+/.github/workflows/** @your-org/platform-owners
+/docker-compose.yml @your-org/platform-owners
+/docs/** @your-org/docs-owners

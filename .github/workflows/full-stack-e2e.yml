@@ -1,0 +1,320 @@
+name: smart-full-stack-e2e
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: smart-full-stack-e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changed-areas:
+    uses: ./.github/workflows/_changed-areas.yml
+
+  full-matrix:
+    needs: changed-areas
+    if: needs.changed-areas.outputs.run_full_matrix == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        provider: [runway, veo, kling]
+        delivery_mode: [poll, direct-relay, edge-callback]
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      PROVIDER_RELAY_SHARED_SECRET: replace-me
+      E2E_PROVIDER: ${{ matrix.provider }}
+      E2E_DELIVERY_MODE: ${{ matrix.delivery_mode }}
+      CI: "true"
+      ARTIFACT_SHARD: ${{ matrix.provider }}-${{ matrix.delivery_mode }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache backend pip downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache frontend npm downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            e2e/node_modules
+            frontend/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('e2e/package-lock.json', 'frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Prepare env files
+        run: |
+          mkdir -p artifacts/playwright/${ARTIFACT_SHARD} artifacts/ci/${ARTIFACT_SHARD}
+          cp backend/.env.example backend/.env.dev || true
+          cp frontend/.env.local.example frontend/.env.local || true
+
+      - name: Show docker compose config
+        run: docker compose config
+
+      - name: Build stack with cache
+        uses: docker/bake-action@v5
+        with:
+          files: |
+            ./docker-compose.yml
+          load: true
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+      - name: Start services
+        run: docker compose up -d postgres redis minio minio-init api worker beat flower frontend edge-relay
+
+      - name: Wait for healthchecks
+        run: python scripts/ci/wait_for_stack.py 300
+
+      - name: Install Playwright deps
+        run: |
+          cd e2e
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run Playwright suite
+        run: docker compose run --rm --profile e2e \
+          -e E2E_PROVIDER=${{ matrix.provider }} \
+          -e E2E_DELIVERY_MODE=${{ matrix.delivery_mode }} \
+          -e ARTIFACT_SHARD=${ARTIFACT_SHARD} \
+          playwright
+
+      - name: Export fail-fast report
+        if: always()
+        run: ARTIFACT_SHARD=${ARTIFACT_SHARD} python scripts/ci/export_fail_fast_report.py
+
+      - name: Upload shard artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-${{ matrix.provider }}-${{ matrix.delivery_mode }}
+          path: |
+            artifacts/playwright/${{ env.ARTIFACT_SHARD }}/**
+            artifacts/ci/${{ env.ARTIFACT_SHARD }}/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Tear down stack
+        if: always()
+        run: docker compose down -v
+
+  frontend-focused:
+    needs: changed-areas
+    if: needs.changed-areas.outputs.run_full_matrix != 'true' && needs.changed-areas.outputs.frontend_changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - provider: runway
+            delivery_mode: edge-callback
+          - provider: runway
+            delivery_mode: direct-relay
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      PROVIDER_RELAY_SHARED_SECRET: replace-me
+      CI: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Cache npm + Playwright
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            e2e/node_modules
+            frontend/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-frontend-e2e-${{ hashFiles('e2e/package-lock.json', 'frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-e2e-
+
+      - name: Prepare env files
+        run: |
+          export ARTIFACT_SHARD=frontend-${{ matrix.provider }}-${{ matrix.delivery_mode }}
+          mkdir -p artifacts/playwright/${ARTIFACT_SHARD} artifacts/ci/${ARTIFACT_SHARD}
+          cp backend/.env.example backend/.env.dev || true
+          cp frontend/.env.local.example frontend/.env.local || true
+          echo "ARTIFACT_SHARD=${ARTIFACT_SHARD}" >> $GITHUB_ENV
+
+      - name: Show docker compose config
+        run: docker compose config
+
+      - name: Build stack with cache
+        uses: docker/bake-action@v5
+        with:
+          files: ./docker-compose.yml
+          load: true
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+      - name: Start services
+        run: docker compose up -d postgres redis minio minio-init api worker beat flower frontend edge-relay
+
+      - name: Wait for healthchecks
+        run: python scripts/ci/wait_for_stack.py 300
+
+      - name: Install Playwright deps
+        run: |
+          cd e2e
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run focused Playwright suite
+        run: docker compose run --rm --profile e2e \
+          -e E2E_PROVIDER=${{ matrix.provider }} \
+          -e E2E_DELIVERY_MODE=${{ matrix.delivery_mode }} \
+          -e ARTIFACT_SHARD=${ARTIFACT_SHARD} \
+          playwright
+
+      - name: Export fail-fast report
+        if: always()
+        run: ARTIFACT_SHARD=${ARTIFACT_SHARD} python scripts/ci/export_fail_fast_report.py
+
+      - name: Upload focused artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_SHARD }}
+          path: |
+            artifacts/playwright/${{ env.ARTIFACT_SHARD }}/**
+            artifacts/ci/${{ env.ARTIFACT_SHARD }}/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Tear down stack
+        if: always()
+        run: docker compose down -v
+
+  edge-focused:
+    needs: changed-areas
+    if: needs.changed-areas.outputs.run_full_matrix != 'true' && needs.changed-areas.outputs.edge_changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - provider: runway
+            delivery_mode: edge-callback
+          - provider: kling
+            delivery_mode: edge-callback
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      PROVIDER_RELAY_SHARED_SECRET: replace-me
+      CI: "true"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Cache npm + Playwright
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            e2e/node_modules
+            frontend/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-edge-e2e-${{ hashFiles('e2e/package-lock.json', 'frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-edge-e2e-
+
+      - name: Prepare env files
+        run: |
+          export ARTIFACT_SHARD=edge-${{ matrix.provider }}-${{ matrix.delivery_mode }}
+          mkdir -p artifacts/playwright/${ARTIFACT_SHARD} artifacts/ci/${ARTIFACT_SHARD}
+          cp backend/.env.example backend/.env.dev || true
+          cp frontend/.env.local.example frontend/.env.local || true
+          echo "ARTIFACT_SHARD=${ARTIFACT_SHARD}" >> $GITHUB_ENV
+
+      - name: Show docker compose config
+        run: docker compose config
+
+      - name: Build stack with cache
+        uses: docker/bake-action@v5
+        with:
+          files: ./docker-compose.yml
+          load: true
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+      - name: Start services
+        run: docker compose up -d postgres redis minio minio-init api worker beat flower frontend edge-relay
+
+      - name: Wait for healthchecks
+        run: python scripts/ci/wait_for_stack.py 300
+
+      - name: Install Playwright deps
+        run: |
+          cd e2e
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run edge-focused Playwright suite
+        run: docker compose run --rm --profile e2e \
+          -e E2E_PROVIDER=${{ matrix.provider }} \
+          -e E2E_DELIVERY_MODE=${{ matrix.delivery_mode }} \
+          -e ARTIFACT_SHARD=${ARTIFACT_SHARD} \
+          playwright
+
+      - name: Export fail-fast report
+        if: always()
+        run: ARTIFACT_SHARD=${ARTIFACT_SHARD} python scripts/ci/export_fail_fast_report.py
+
+      - name: Upload focused artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_SHARD }}
+          path: |
+            artifacts/playwright/${{ env.ARTIFACT_SHARD }}/**
+            artifacts/ci/${{ env.ARTIFACT_SHARD }}/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Tear down stack
+        if: always()
+        run: docker compose down -v
+
+  no-op-summary:
+    needs: changed-areas
+    if: needs.changed-areas.outputs.run_full_matrix != 'true' && needs.changed-areas.outputs.frontend_changed != 'true' && needs.changed-areas.outputs.edge_changed != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report skipped smart CI
+        run: |
+          echo "Smart CI skipped heavy E2E shards."
+          echo "${{ needs.changed-areas.outputs.changed_summary }}"

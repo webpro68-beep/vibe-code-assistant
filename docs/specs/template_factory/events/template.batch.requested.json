@@ -1,0 +1,11 @@
+{
+  "event_name": "template.batch.requested",
+  "version": "1.0.0",
+  "payload": {
+    "template_clone_job_id": "uuid",
+    "template_pack_id": "uuid",
+    "count": 10,
+    "auto_render": true,
+    "auto_upload": true
+  }
+}

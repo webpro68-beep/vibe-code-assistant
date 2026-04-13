@@ -1,0 +1,15 @@
+{
+  "event_name": "template.generate.requested",
+  "version": "1.0.0",
+  "payload": {
+    "template_usage_run_id": "uuid",
+    "template_pack_id": "uuid",
+    "template_version_id": "uuid",
+    "input_slots_json": {
+      "topic": "string",
+      "audience": "string"
+    },
+    "auto_render": true,
+    "auto_upload": false
+  }
+}

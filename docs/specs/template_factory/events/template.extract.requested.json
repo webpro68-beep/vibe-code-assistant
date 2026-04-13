@@ -1,0 +1,9 @@
+{
+  "event_name": "template.extract.requested",
+  "version": "1.0.0",
+  "payload": {
+    "extraction_id": "uuid",
+    "source_project_id": "uuid",
+    "auto_publish": false
+  }
+}

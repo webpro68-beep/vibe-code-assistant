@@ -1,0 +1,12 @@
+{
+  "event_name": "template.analytics.snapshot.created",
+  "version": "1.0.0",
+  "payload": {
+    "template_pack_id": "uuid",
+    "snapshot_id": "uuid",
+    "usage_count": 120,
+    "render_success_rate": 0.97,
+    "upload_success_rate": 0.95,
+    "avg_retry_count": 0.4
+  }
+}

@@ -1,0 +1,213 @@
+name: alembic-lineage-postgres-full-cycle
+
+on:
+  pull_request:
+    paths:
+      - "backend/alembic/**"
+      - "backend/app/models/**"
+      - "backend/app/db/**"
+      - "backend/scripts/check_single_alembic_head.py"
+      - ".github/workflows/alembic-lineage-postgres-full-cycle.yml"
+      - "docs/migration-governance-policy.md"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "backend/alembic/**"
+      - "backend/app/models/**"
+      - "backend/app/db/**"
+      - "backend/scripts/check_single_alembic_head.py"
+      - ".github/workflows/alembic-lineage-postgres-full-cycle.yml"
+      - "docs/migration-governance-policy.md"
+  workflow_dispatch:
+
+concurrency:
+  group: alembic-lineage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  alembic-lineage-and-full-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: app_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app -d app_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend
+
+    env:
+      PYTHONUNBUFFERED: "1"
+      DATABASE_URL: postgresql+psycopg2://app:app@127.0.0.1:5432/app_test
+      ALEMBIC_CONFIG: alembic.ini
+      ALEMBIC_ALLOWED_BRANCHPOINTS: ""
+      ALEMBIC_EXPECTED_BASES: ""
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+            backend/pyproject.toml
+            backend/poetry.lock
+
+      - name: Install OS packages
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+            if [ -f requirements-dev.txt ]; then
+              pip install -r requirements-dev.txt
+            fi
+          elif [ -f pyproject.toml ]; then
+            pip install poetry
+            poetry install --no-interaction --no-root
+          else
+            echo "No dependency manifest found in backend/"
+            exit 1
+          fi
+          python - <<'PY'
+          import importlib.util
+          mods = ["alembic", "sqlalchemy"]
+          missing = [m for m in mods if importlib.util.find_spec(m) is None]
+          if missing:
+              raise SystemExit(f"Missing required Python packages: {missing}")
+          print("Python dependency precheck passed")
+          PY
+
+      - name: Wait for PostgreSQL
+        run: |
+          set -euo pipefail
+          for i in {1..40}; do
+            pg_isready -h 127.0.0.1 -p 5432 -U app -d app_test && exit 0
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+          echo "PostgreSQL did not become ready in time"
+          exit 1
+
+      - name: Print tool versions
+        run: |
+          set -euo pipefail
+          python --version
+          psql --version
+          if command -v alembic >/dev/null 2>&1; then
+            alembic --version
+          else
+            python -m alembic --version
+          fi
+
+      - name: Assert Alembic graph
+        run: |
+          python - <<'PY'
+          from alembic.config import Config
+          from alembic.script import ScriptDirectory
+
+          cfg = Config("alembic.ini")
+          script = ScriptDirectory.from_config(cfg)
+          heads = script.get_heads()
+          assert heads == ["20260412_9999"], heads
+          revs = {r.revision for r in script.walk_revisions()}
+          assert "20260412_0025" in revs, "missing 20260412_0025"
+          print("Alembic graph OK")
+          PY
+
+      - name: Run Alembic heads
+        run: python -m alembic -c alembic.ini heads
+
+      - name: Raw topology log
+        run: |
+          set -euo pipefail
+          echo "=== alembic current ==="
+          python -m alembic current || true
+          echo "=== alembic heads --verbose ==="
+          python -m alembic heads --verbose || python -m alembic heads
+          echo "=== alembic branches --verbose ==="
+          python -m alembic branches --verbose || python -m alembic branches || true
+          echo "=== alembic history tail ==="
+          python -m alembic history | tail -n 80 || true
+
+      - name: Lineage-aware graph validation
+        run: |
+          set -euo pipefail
+          python scripts/check_single_alembic_head.py
+
+      - name: Full-cycle PostgreSQL validation
+        run: |
+          set -euo pipefail
+          echo "=== STEP 1: upgrade head ==="
+          python -m alembic upgrade head
+          echo "=== STEP 2: current after first upgrade ==="
+          python -m alembic current
+          echo "=== STEP 3: downgrade base ==="
+          python -m alembic downgrade base
+          echo "=== STEP 4: current after downgrade ==="
+          python -m alembic current || true
+          echo "=== STEP 5: re-upgrade head ==="
+          python -m alembic upgrade head
+          echo "=== STEP 6: current after second upgrade ==="
+          python -m alembic current
+
+      - name: Schema smoke inspection
+        run: |
+          set -euo pipefail
+          echo "=== alembic_version ==="
+          psql "postgresql://app:app@127.0.0.1:5432/app_test" -c "SELECT * FROM alembic_version;"
+          echo "=== tables ==="
+          psql "postgresql://app:app@127.0.0.1:5432/app_test" -c "\dt"
+
+      - name: Upload topology summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alembic-topology-summary
+          path: |
+            backend/alembic.ini
+            backend/alembic
+          if-no-files-found: ignore
+
+      - name: Dump failure context
+        if: failure()
+        run: |
+          set +e
+          echo "=== FAILURE CONTEXT: current ==="
+          python -m alembic current
+          echo "=== FAILURE CONTEXT: heads ==="
+          python -m alembic heads --verbose || python -m alembic heads
+          echo "=== FAILURE CONTEXT: branches ==="
+          python -m alembic branches --verbose || python -m alembic branches
+          echo "=== FAILURE CONTEXT: history tail ==="
+          python -m alembic history | tail -n 120
+          echo "=== FAILURE CONTEXT: alembic_version ==="
+          psql "postgresql://app:app@127.0.0.1:5432/app_test" -c "SELECT * FROM alembic_version;"
+          echo "=== FAILURE CONTEXT: tables ==="
+          psql "postgresql://app:app@127.0.0.1:5432/app_test" -c "\dt"

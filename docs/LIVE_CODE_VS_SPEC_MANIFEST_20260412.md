@@ -1,0 +1,155 @@
+# LIVE CODE VS SPEC-ONLY MANIFEST — 2026-04-12
+
+## executable
+- count: **377**
+- top-level distribution:
+  - `backend`: 303
+  - `e2e`: 5
+  - `edge`: 9
+  - `frontend`: 52
+  - `scripts`: 8
+- sample files:
+  - `backend/alembic/env.py`
+  - `backend/alembic/script.py.mako`
+  - `backend/alembic/versions/20260408_0001_create_render_jobs_and_scene_tasks.py`
+  - `backend/alembic/versions/20260408_0002_add_object_storage_fields.py`
+  - `backend/alembic/versions/20260408_0003_add_provider_runtime_fields.py`
+  - `backend/alembic/versions/20260408_0004_add_webhook_events_table.py`
+  - `backend/alembic/versions/20260410_000001_add_render_job_storage_and_subtitles.py`
+  - `backend/alembic/versions/20260410_000002_expand_render_scene_tasks_for_provider_pipeline.py`
+  - `backend/alembic/versions/20260410_0005_add_provider_status_raw_nullable.py`
+  - `backend/alembic/versions/20260410_0006_backfill_provider_status_raw.py`
+  - `backend/alembic/versions/20260410_0007_enforce_provider_status_raw_not_null.py`
+  - `backend/alembic/versions/20260410_0008_add_state_transition_events_table.py`
+  - `backend/alembic/versions/20260410_0009_add_render_timeline_and_health_snapshot.py`
+  - `backend/alembic/versions/20260410_0010_add_render_incident_state_and_actions.py`
+  - `backend/alembic/versions/20260410_0011_add_render_incident_saved_views.py`
+  - `backend/alembic/versions/20260410_0012_add_rbac_and_bulk_audit.py`
+  - `backend/alembic/versions/20260411_0013_merge_post_merge_heads.py`
+  - `backend/alembic/versions/20260411_0014_add_control_plane_runtime_tables.py`
+  - `backend/alembic/versions/20260411_0015_add_autopilot_execution_state.py`
+  - `backend/alembic/versions/20260411_0016_add_observability_notification_tables.py`
+  - `backend/alembic/versions/20260411_0017_add_audio_studio_tables.py`
+  - `backend/alembic/versions/20260412_0018_add_production_timeline_tables.py`
+  - `backend/alembic/versions/20260412_0019_add_enterprise_strategy_tables.py`
+  - `backend/alembic/versions/20260412_0020_template_factory_layer.py`
+  - `backend/alembic/versions/20260412_0021_template_runtime_scoring_and_autopick.py`
+  - `backend/alembic/versions/20260412_0022_template_extraction_competition_learning.py`
+  - `backend/alembic/versions/20260412_0023_veo_workspace_and_batch.py`
+  - `backend/alembic/versions/20260412_0024_governance_scheduling_and_post_plan_evaluation.py`
+  - `backend/app/__init__.py`
+  - `backend/app/api/__init__.py`
+  - `backend/app/api/audio.py`
+  - `backend/app/api/autopilot.py`
+  - `backend/app/api/control_plane.py`
+  - `backend/app/api/decision_engine.py`
+  - `backend/app/api/health.py`
+  - `backend/app/api/observability.py`
+  - `backend/app/api/orchestration_timeline.py`
+  - `backend/app/api/production.py`
+  - `backend/app/api/project_from_preview.py`
+  - `backend/app/api/project_workspace.py`
+
+## executable-support
+- count: **42**
+- top-level distribution:
+  - `.env.example`: 1
+  - `.github`: 8
+  - `Makefile`: 1
+  - `backend`: 22
+  - `docker-compose.yml`: 1
+  - `frontend`: 9
+- sample files:
+  - `.env.example`
+  - `.github/CODEOWNERS`
+  - `.github/workflows/_changed-areas.yml`
+  - `.github/workflows/alembic-check.yml`
+  - `.github/workflows/backend-quick-check.yml`
+  - `.github/workflows/ci.yml`
+  - `.github/workflows/flaky-test-quarantine.yml`
+  - `.github/workflows/frontend-quick-check.yml`
+  - `.github/workflows/full-stack-e2e.yml`
+  - `Makefile`
+  - `backend/.dockerignore`
+  - `backend/.env.dev`
+  - `backend/.env.example`
+  - `backend/Dockerfile.dev`
+  - `backend/Makefile`
+  - `backend/README_RUN_LOCAL.md`
+  - `backend/alembic.ini`
+  - `backend/docker-compose.dev.yml`
+  - `backend/docs/migration_review_policy.md`
+  - `backend/docs/migration_workflow.md`
+  - `backend/docs/zero_downtime_migration_checklist.md`
+  - `backend/pytest.ini`
+  - `backend/requirements.txt`
+  - `backend/scripts/bootstrap-env.sh`
+  - `backend/scripts/check_autogenerate_clean.py`
+  - `backend/scripts/check_migration_head.py`
+  - `backend/scripts/check_missing_migration.py`
+  - `backend/scripts/start-api.sh`
+  - `backend/scripts/start-beat.sh`
+  - `backend/scripts/start-worker.sh`
+  - `backend/scripts/wait_for_postgres.py`
+  - `backend/seed_mock_job.py`
+  - `docker-compose.yml`
+  - `frontend/.dockerignore`
+  - `frontend/.env.local`
+  - `frontend/.env.local.example`
+  - `frontend/Dockerfile`
+  - `frontend/next-env.d.ts`
+  - `frontend/next.config.js`
+  - `frontend/package-lock.json`
+
+## reference-only
+- count: **97**
+- top-level distribution:
+  - `.gitignore`: 1
+  - `FULL_MERGE_REPORT_20260412.md`: 1
+  - `MONOREPO_AUDIT_REPORT_20260411.md`: 1
+  - `README.md`: 1
+  - `TREE.txt`: 1
+  - `TREE_MERGED_PHASES.txt`: 1
+  - `docs`: 91
+- sample files:
+  - `.gitignore`
+  - `FULL_MERGE_REPORT_20260412.md`
+  - `MONOREPO_AUDIT_REPORT_20260411.md`
+  - `README.md`
+  - `TREE.txt`
+  - `TREE_MERGED_PHASES.txt`
+  - `docs/AUDIO_STUDIO_PATCH_2026-04-11.md`
+  - `docs/AUTONOMOUS_CONTROL_FABRIC_2026-04-11.md`
+  - `docs/BRANCH_PROTECTION_MAP_2026-04-11.md`
+  - `docs/CI_FULL_STACK_E2E_2026-04-11.md`
+  - `docs/CONTINUATION_PATCH_2026-04-11.md`
+  - `docs/CONTROL_FABRIC_2026-04-11.md`
+  - `docs/DECISION_ENGINE_2026-04-11.md`
+  - `docs/DEPENDENCIES.md`
+  - `docs/DEPLOYMENT.md`
+  - `docs/E2E_CHECKLIST.md`
+  - `docs/EDGE_RELAY_AND_LIVE_SMOKE_2026-04-11.md`
+  - `docs/ENTERPRISE_STRATEGY_PATCH_2026-04-12.md`
+  - `docs/FRONTEND_DASHBOARD_PLANE_PATCH_2026-04-11.md`
+  - `docs/FRONTEND_INCIDENT_DRAWER_AND_RECONCILIATION_PATCH_2026-04-11.md`
+  - `docs/FRONTEND_OPERATIONAL_PANEL_PATCH_2026-04-11.md`
+  - `docs/INCIDENT_HISTORY_AND_NOTE_PERSISTENCE_PATCH_2026-04-11.md`
+  - `docs/INCIDENT_PROJECTION_RESOLVE_REOPEN_PATCH_2026-04-11.md`
+  - `docs/INCIDENT_WORK_SURFACE_PATCH_2026-04-11.md`
+  - `docs/INCIDENT_WORK_SURFACE_PHASE2_PATCH_2026-04-11.md`
+  - `docs/INCIDENT_WORK_SURFACE_PHASE3_GOVERNANCE_PATCH_2026-04-11.md`
+  - `docs/LOCAL_DEV.md`
+  - `docs/MERGE_ALL_PHASES_MANIFEST_2026-04-11.json`
+  - `docs/MERGE_ALL_PHASES_PROVENANCE_2026-04-11.md`
+  - `docs/MIGRATION_HEADS_CHECK_2026-04-11.json`
+  - `docs/OBSERVABILITY_NOTIFICATION_PLANE_2026-04-11.md`
+  - `docs/PLAYWRIGHT_DASHBOARD_OPS_SUITE_2026-04-11.md`
+  - `docs/PLAYWRIGHT_E2E_DEEP_ASSERTIONS_2026-04-11.md`
+  - `docs/PLAYWRIGHT_E2E_LOCAL_2026-04-11.md`
+  - `docs/PLAYWRIGHT_INCIDENT_ACTIONS_2026-04-11.md`
+  - `docs/POST_MERGE_HARDENING_RESULTS_2026-04-11.md`
+  - `docs/PRODUCTION_TIMELINE_PATCH_2026-04-12.md`
+  - `docs/PROVIDER_CALLBACK_RELAY_SMOKE_2026-04-11.md`
+  - `docs/PROVIDER_PRODUCTION_READY_PATCH_2026-04-11.md`
+  - `docs/RENDER_CORE_SYSTEM_SPEC_20260412.md`
+

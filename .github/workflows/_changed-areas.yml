@@ -1,0 +1,94 @@
+name: detect-changed-areas
+
+on:
+  workflow_call:
+    outputs:
+      backend_changed:
+        description: "Backend-related files changed"
+        value: ${{ jobs.detect.outputs.backend_changed }}
+      frontend_changed:
+        description: "Frontend-related files changed"
+        value: ${{ jobs.detect.outputs.frontend_changed }}
+      e2e_changed:
+        description: "E2E-related files changed"
+        value: ${{ jobs.detect.outputs.e2e_changed }}
+      edge_changed:
+        description: "Edge relay-related files changed"
+        value: ${{ jobs.detect.outputs.edge_changed }}
+      infra_changed:
+        description: "Infra/CI files changed"
+        value: ${{ jobs.detect.outputs.infra_changed }}
+      run_full_matrix:
+        description: "Run all shards"
+        value: ${{ jobs.detect.outputs.run_full_matrix }}
+      changed_summary:
+        description: "Summary of changed areas"
+        value: ${{ jobs.detect.outputs.changed_summary }}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      backend_changed: ${{ steps.filter.outputs.backend }}
+      frontend_changed: ${{ steps.filter.outputs.frontend }}
+      e2e_changed: ${{ steps.filter.outputs.e2e }}
+      edge_changed: ${{ steps.filter.outputs.edge }}
+      infra_changed: ${{ steps.filter.outputs.infra }}
+      run_full_matrix: ${{ steps.compute.outputs.run_full_matrix }}
+      changed_summary: ${{ steps.compute.outputs.changed_summary }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect path changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'Makefile'
+            frontend:
+              - 'frontend/**'
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'Makefile'
+            e2e:
+              - 'e2e/**'
+              - 'scripts/smoke/**'
+              - 'scripts/ci/**'
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'Makefile'
+            edge:
+              - 'edge/**'
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'Makefile'
+            infra:
+              - '.github/workflows/**'
+              - 'docs/**'
+              - 'docker-compose.yml'
+              - '.env.example'
+              - 'Makefile'
+
+      - name: Compute smart CI flags
+        id: compute
+        shell: bash
+        run: |
+          backend="${{ steps.filter.outputs.backend }}"
+          frontend="${{ steps.filter.outputs.frontend }}"
+          e2e="${{ steps.filter.outputs.e2e }}"
+          edge="${{ steps.filter.outputs.edge }}"
+          infra="${{ steps.filter.outputs.infra }}"
+
+          run_full_matrix=false
+          if [[ "$backend" == "true" || "$e2e" == "true" || "$infra" == "true" ]]; then
+            run_full_matrix=true
+          fi
+
+          summary="backend=$backend, frontend=$frontend, e2e=$e2e, edge=$edge, infra=$infra, run_full_matrix=$run_full_matrix"
+
+          echo "run_full_matrix=$run_full_matrix" >> "$GITHUB_OUTPUT"
+          echo "changed_summary=$summary" >> "$GITHUB_OUTPUT"

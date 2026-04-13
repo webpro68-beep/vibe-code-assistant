@@ -1,0 +1,1 @@
+SCRIPT UPLOAD PREVIEW EDITING CONSOLE — PRODUCTION TECHNICAL SPEC\n\nImported as source-of-truth for pre-project preview/edit/validate/confirm flow.\n

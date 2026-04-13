@@ -1,0 +1,1 @@
+TECHNICAL SPEC — RENDER CORE SYSTEM\n\nImported from uploaded specification bundle for source-of-truth alignment. See attached source excerpts and spec pack. This repo merge keeps Render Pipeline Integration before Template Engine Integration.\n

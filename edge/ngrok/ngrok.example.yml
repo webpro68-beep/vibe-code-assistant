@@ -1,0 +1,7 @@
+version: "2"
+authtoken: REPLACE_WITH_YOUR_NGROK_TOKEN
+tunnels:
+  provider-callback-edge:
+    proto: http
+    addr: 8080
+    inspect: true

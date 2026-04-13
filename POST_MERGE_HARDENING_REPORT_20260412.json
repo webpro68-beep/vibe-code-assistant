@@ -1,0 +1,179 @@
+{
+  "router_import_count": 27,
+  "router_include_count": 27,
+  "missing_include_aliases": [],
+  "orphan_include_aliases": [],
+  "duplicate_import_lines": {},
+  "duplicate_model_class_names": {},
+  "migration_heads": [
+    "20260412_0024"
+  ],
+  "migration_roots": [
+    "20260408_0001"
+  ],
+  "migration_count": 26,
+  "live_code_vs_spec_summary": {
+    "total_files": 516,
+    "executable-support": 42,
+    "reference-only": 97,
+    "executable": 377
+  },
+  "migration_files": {
+    "20260408_0001": {
+      "file": "backend/alembic/versions/20260408_0001_create_render_jobs_and_scene_tasks.py",
+      "down_revisions": []
+    },
+    "20260408_0002": {
+      "file": "backend/alembic/versions/20260408_0002_add_object_storage_fields.py",
+      "down_revisions": [
+        "20260408_0001"
+      ]
+    },
+    "20260408_0003": {
+      "file": "backend/alembic/versions/20260408_0003_add_provider_runtime_fields.py",
+      "down_revisions": [
+        "20260408_0002"
+      ]
+    },
+    "20260408_0004": {
+      "file": "backend/alembic/versions/20260408_0004_add_webhook_events_table.py",
+      "down_revisions": [
+        "20260408_0003"
+      ]
+    },
+    "20260410_000001": {
+      "file": "backend/alembic/versions/20260410_000001_add_render_job_storage_and_subtitles.py",
+      "down_revisions": [
+        "20260408_0004"
+      ]
+    },
+    "20260410_000002": {
+      "file": "backend/alembic/versions/20260410_000002_expand_render_scene_tasks_for_provider_pipeline.py",
+      "down_revisions": [
+        "20260410_000001"
+      ]
+    },
+    "20260410_0005": {
+      "file": "backend/alembic/versions/20260410_0005_add_provider_status_raw_nullable.py",
+      "down_revisions": [
+        "20260408_0004"
+      ]
+    },
+    "20260410_0006": {
+      "file": "backend/alembic/versions/20260410_0006_backfill_provider_status_raw.py",
+      "down_revisions": [
+        "20260410_0005"
+      ]
+    },
+    "20260410_0007": {
+      "file": "backend/alembic/versions/20260410_0007_enforce_provider_status_raw_not_null.py",
+      "down_revisions": [
+        "20260410_0006"
+      ]
+    },
+    "20260410_0008": {
+      "file": "backend/alembic/versions/20260410_0008_add_state_transition_events_table.py",
+      "down_revisions": [
+        "20260408_0004"
+      ]
+    },
+    "20260410_0009": {
+      "file": "backend/alembic/versions/20260410_0009_add_render_timeline_and_health_snapshot.py",
+      "down_revisions": [
+        "20260410_0008"
+      ]
+    },
+    "20260410_0010": {
+      "file": "backend/alembic/versions/20260410_0010_add_render_incident_state_and_actions.py",
+      "down_revisions": [
+        "20260410_0009"
+      ]
+    },
+    "20260410_0011": {
+      "file": "backend/alembic/versions/20260410_0011_add_render_incident_saved_views.py",
+      "down_revisions": [
+        "20260410_0010"
+      ]
+    },
+    "20260410_0012": {
+      "file": "backend/alembic/versions/20260410_0012_add_rbac_and_bulk_audit.py",
+      "down_revisions": [
+        "20260410_0011"
+      ]
+    },
+    "20260411_0013": {
+      "file": "backend/alembic/versions/20260411_0013_merge_post_merge_heads.py",
+      "down_revisions": [
+        "20260410_000002",
+        "20260410_0007",
+        "20260410_0012"
+      ]
+    },
+    "20260411_0014": {
+      "file": "backend/alembic/versions/20260411_0014_add_control_plane_runtime_tables.py",
+      "down_revisions": [
+        "20260411_0013"
+      ]
+    },
+    "20260411_0015": {
+      "file": "backend/alembic/versions/20260411_0015_add_autopilot_execution_state.py",
+      "down_revisions": [
+        "20260411_0014"
+      ]
+    },
+    "20260411_0016": {
+      "file": "backend/alembic/versions/20260411_0016_add_observability_notification_tables.py",
+      "down_revisions": [
+        "20260411_0015"
+      ]
+    },
+    "20260411_0017": {
+      "file": "backend/alembic/versions/20260411_0017_add_audio_studio_tables.py",
+      "down_revisions": [
+        "20260411_0016"
+      ]
+    },
+    "20260412_0018": {
+      "file": "backend/alembic/versions/20260412_0018_add_production_timeline_tables.py",
+      "down_revisions": [
+        "20260411_0017"
+      ]
+    },
+    "20260412_0019": {
+      "file": "backend/alembic/versions/20260412_0019_add_enterprise_strategy_tables.py",
+      "down_revisions": [
+        "20260412_0018"
+      ]
+    },
+    "20260412_0020": {
+      "file": "backend/alembic/versions/20260412_0020_template_factory_layer.py",
+      "down_revisions": [
+        "20260412_0019"
+      ]
+    },
+    "20260412_0021": {
+      "file": "backend/alembic/versions/20260412_0021_template_runtime_scoring_and_autopick.py",
+      "down_revisions": [
+        "20260412_0020"
+      ]
+    },
+    "20260412_0022": {
+      "file": "backend/alembic/versions/20260412_0022_template_extraction_competition_learning.py",
+      "down_revisions": [
+        "20260412_0021"
+      ]
+    },
+    "20260412_0023": {
+      "file": "backend/alembic/versions/20260412_0023_veo_workspace_and_batch.py",
+      "down_revisions": [
+        "20260412_0022"
+      ]
+    },
+    "20260412_0024": {
+      "file": "backend/alembic/versions/20260412_0024_governance_scheduling_and_post_plan_evaluation.py",
+      "down_revisions": [
+        "20260412_0023"
+      ]
+    }
+  }
+}

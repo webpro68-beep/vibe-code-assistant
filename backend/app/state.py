@@ -1,0 +1,6 @@
+from app.services.production.timeline_repository import InMemoryTimelineRepository
+from app.services.production.timeline_service import ProductionTimelineService
+
+
+timeline_repository = InMemoryTimelineRepository()
+timeline_service = ProductionTimelineService(timeline_repository)

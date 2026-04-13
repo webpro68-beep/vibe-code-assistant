@@ -1,0 +1,205 @@
+version: "3.9"
+
+x-app-env: &app-env
+  APP_ENV: ${APP_ENV:-development}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8000}
+
+  DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://postgres:postgres@postgres:5432/render_factory}
+
+  CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+  CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+  CELERY_TASK_TIME_LIMIT: ${CELERY_TASK_TIME_LIMIT:-1800}
+  CELERY_TASK_SOFT_TIME_LIMIT: ${CELERY_TASK_SOFT_TIME_LIMIT:-1500}
+  CELERY_WORKER_PREFETCH_MULTIPLIER: ${CELERY_WORKER_PREFETCH_MULTIPLIER:-1}
+  CELERY_TASK_ACKS_LATE: ${CELERY_TASK_ACKS_LATE:-true}
+
+  STORAGE_ROOT: ${STORAGE_ROOT:-/app/storage}
+  RENDER_CACHE_DIR: ${RENDER_CACHE_DIR:-/app/storage/render_cache}
+  RENDER_OUTPUT_DIR: ${RENDER_OUTPUT_DIR:-/app/storage/render_outputs}
+
+  OBJECT_STORAGE_PROVIDER: ${OBJECT_STORAGE_PROVIDER:-minio}
+  S3_ENDPOINT_URL: ${S3_ENDPOINT_URL:-http://minio:9000}
+  S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID:-minioadmin}
+  S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY:-minioadmin}
+  S3_BUCKET_NAME: ${S3_BUCKET_NAME:-render-assets}
+  S3_REGION: ${S3_REGION:-us-east-1}
+  S3_PUBLIC_BASE_URL: ${S3_PUBLIC_BASE_URL:-http://localhost:9000/render-assets}
+  SIGNED_URL_EXPIRES_SECONDS: ${SIGNED_URL_EXPIRES_SECONDS:-3600}
+
+  GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
+  GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-global}
+  GOOGLE_GENAI_USE_VERTEX: ${GOOGLE_GENAI_USE_VERTEX:-true}
+  GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
+  VEO_DEFAULT_MODEL: ${VEO_DEFAULT_MODEL:-veo-3.1-generate-001}
+  VEO_FAST_MODEL: ${VEO_FAST_MODEL:-veo-3.1-fast-generate-001}
+  VEO_OUTPUT_GCS_URI: ${VEO_OUTPUT_GCS_URI:-}
+
+  RUNWAYML_API_SECRET: ${RUNWAYML_API_SECRET:-}
+  RUNWAY_API_BASE_URL: ${RUNWAY_API_BASE_URL:-https://api.dev.runwayml.com}
+  RUNWAY_API_VERSION: ${RUNWAY_API_VERSION:-2024-11-06}
+  RUNWAY_DEFAULT_MODEL: ${RUNWAY_DEFAULT_MODEL:-gen4.5}
+
+  KLING_ACCESS_KEY: ${KLING_ACCESS_KEY:-}
+  KLING_SECRET_KEY: ${KLING_SECRET_KEY:-}
+  KLING_API_BASE_URL: ${KLING_API_BASE_URL:-https://api.klingai.com}
+  KLING_DEFAULT_MODEL: ${KLING_DEFAULT_MODEL:-kling-v1}
+  KLING_TOKEN_TTL_SECONDS: ${KLING_TOKEN_TTL_SECONDS:-1800}
+
+  PROVIDER_HTTP_TIMEOUT_SECONDS: ${PROVIDER_HTTP_TIMEOUT_SECONDS:-120}
+
+  PYTHONPATH: /app
+
+x-app-volumes: &app-volumes
+  - .:/app
+  - render_storage_dev:/app/storage
+
+x-app-build: &app-build
+  context: .
+  dockerfile: Dockerfile.dev
+
+x-app-depends: &app-depends
+  postgres:
+    condition: service_healthy
+  redis:
+    condition: service_healthy
+  minio:
+    condition: service_healthy
+
+x-app-base: &app-base
+  build: *app-build
+  restart: unless-stopped
+  env_file:
+    - .env.dev
+  environment:
+    <<: *app-env
+  volumes: *app-volumes
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: render_factory_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: render_factory
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d render_factory"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: render_factory_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    container_name: render_factory_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data_dev:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: render_factory_minio_init
+    depends_on:
+      minio:
+        condition: service_healthy
+    env_file:
+      - .env.dev
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 ${S3_ACCESS_KEY_ID:-minioadmin} ${S3_SECRET_ACCESS_KEY:-minioadmin} &&
+      mc mb -p local/${S3_BUCKET_NAME:-render-assets} || true &&
+      mc anonymous set private local/${S3_BUCKET_NAME:-render-assets} || true &&
+      exit 0
+      "
+
+  api:
+    <<: *app-base
+    container_name: render_factory_api
+    depends_on:
+      <<: *app-depends
+    ports:
+      - "8000:8000"
+    command: ["/bin/bash", "/app/scripts/start-api.sh"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  worker:
+    <<: *app-base
+    container_name: render_factory_worker
+    depends_on:
+      <<: *app-depends
+      api:
+        condition: service_started
+    command: ["/bin/bash", "/app/scripts/start-worker.sh"]
+
+  beat:
+    <<: *app-base
+    container_name: render_factory_beat
+    depends_on:
+      <<: *app-depends
+      api:
+        condition: service_started
+    command: ["/bin/bash", "/app/scripts/start-beat.sh"]
+
+  flower:
+    <<: *app-base
+    container_name: render_factory_flower
+    environment:
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      PYTHONPATH: /app
+    depends_on:
+      redis:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    ports:
+      - "5555:5555"
+    command:
+      [
+        "celery",
+        "-A",
+        "app.core.celery_app.celery_app",
+        "flower",
+        "--port=5555"
+      ]
+
+volumes:
+  postgres_data_dev:
+  redis_data_dev:
+  minio_data_dev:
+  render_storage_dev:

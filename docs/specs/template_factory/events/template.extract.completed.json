@@ -1,0 +1,13 @@
+{
+  "event_name": "template.extract.completed",
+  "version": "1.0.0",
+  "payload": {
+    "extraction_id": "uuid",
+    "template_pack_id": "uuid",
+    "template_version_id": "uuid",
+    "score_json": {
+      "reusability_score": 91.0,
+      "performance_score": 84.0
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "event_name": "template.extract.failed",
+  "version": "1.0.0",
+  "payload": {
+    "extraction_id": "uuid",
+    "source_project_id": "uuid",
+    "error_code": "EXTRACTION_FAILED",
+    "error_message": "string"
+  }
+}

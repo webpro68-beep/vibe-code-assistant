@@ -1,0 +1,2074 @@
+{
+  "summary": {
+    "total_files": 516,
+    "executable-support": 42,
+    "reference-only": 97,
+    "executable": 377
+  },
+  "files": [
+    {
+      "path": ".env.example",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/_changed-areas.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/alembic-check.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/backend-quick-check.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/flaky-test-quarantine.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/frontend-quick-check.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".github/workflows/full-stack-e2e.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": ".gitignore",
+      "classification": "reference-only"
+    },
+    {
+      "path": "FULL_MERGE_REPORT_20260412.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "MONOREPO_AUDIT_REPORT_20260411.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "Makefile",
+      "classification": "executable-support"
+    },
+    {
+      "path": "README.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "TREE.txt",
+      "classification": "reference-only"
+    },
+    {
+      "path": "TREE_MERGED_PHASES.txt",
+      "classification": "reference-only"
+    },
+    {
+      "path": "backend/.dockerignore",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/.env.dev",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/.env.example",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/Dockerfile.dev",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/Makefile",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/README_RUN_LOCAL.md",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/alembic.ini",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/alembic/env.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/script.py.mako",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260408_0001_create_render_jobs_and_scene_tasks.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260408_0002_add_object_storage_fields.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260408_0003_add_provider_runtime_fields.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260408_0004_add_webhook_events_table.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_000001_add_render_job_storage_and_subtitles.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_000002_expand_render_scene_tasks_for_provider_pipeline.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0005_add_provider_status_raw_nullable.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0006_backfill_provider_status_raw.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0007_enforce_provider_status_raw_not_null.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0008_add_state_transition_events_table.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0009_add_render_timeline_and_health_snapshot.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0010_add_render_incident_state_and_actions.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0011_add_render_incident_saved_views.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260410_0012_add_rbac_and_bulk_audit.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260411_0013_merge_post_merge_heads.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260411_0014_add_control_plane_runtime_tables.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260411_0015_add_autopilot_execution_state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260411_0016_add_observability_notification_tables.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260411_0017_add_audio_studio_tables.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0018_add_production_timeline_tables.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0019_add_enterprise_strategy_tables.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0020_template_factory_layer.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0021_template_runtime_scoring_and_autopick.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0022_template_extraction_competition_learning.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0023_veo_workspace_and_batch.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/alembic/versions/20260412_0024_governance_scheduling_and_post_plan_evaluation.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/audio.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/autopilot.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/control_plane.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/decision_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/health.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/observability.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/orchestration_timeline.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/production.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/project_from_preview.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/project_workspace.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/provider_callbacks.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/provider_payload_preview.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/render_dashboard.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/render_events.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/render_execution.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/render_job_health.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/render_job_status.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/script_regeneration_routes.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/script_upload_preview.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/script_validation.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/storage.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/strategy.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/template_extraction.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/template_governance_scheduling.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/template_runtime.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/templates.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/api/veo_workspace.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/core/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/core/celery_app.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/core/config.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/db/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/db/base.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/db/session.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/enums/provider.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/enums/render_state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/main.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/media/subtitle_burner.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/media/video_merger.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/audio_mix_profile.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/audio_render_output.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/autopilot_execution_state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/business_outcome_snapshot.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/campaign_window.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/contract_sla_profile.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/decision_execution_audit_log.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/enterprise_strategy_signal.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/global_kill_switch.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/music_asset.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/narration_job.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/narration_segment.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/notification_delivery_log.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/notification_endpoint.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/objective_profile.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/portfolio_allocation_plan.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/production_run.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/production_timeline_event.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/provider_routing_override.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/provider_webhook_event.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/release_gate_state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_incident_action.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_incident_bulk_action_item.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_incident_bulk_action_run.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_incident_saved_view.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_incident_state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_job.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_job_summary.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_operator_access_profile.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_scene_task.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/render_timeline_event.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/roadmap_priority.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/state_transition_event.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/strategy_directive.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/template_factory.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/template_governance_schedule.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/template_runtime.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/veo_workspace.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/voice_profile.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/voice_sample.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/models/worker_concurrency_override.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/policies/default_decision_policy.json",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/base.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/common.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/factory.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/kling/adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/runway/adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/providers/veo/adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/repositories/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/repositories/template_factory_repo.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/audio.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/control_plane.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/decision_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/observability.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/production.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/provider_common.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_access_control.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_bulk_audit.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_console_explainability.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_dashboard_incidents.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_dashboard_summary.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_events.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_execution.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_health.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_incident_history.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_incident_saved_views.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_incident_work_surface.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_job_list.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_job_status.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/render_productivity.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/script_preview.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/state_transition_event.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/storage.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/strategy.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/template_factory.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/schemas/validation.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/asset_collector.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/asset_uploader.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/audio_mix_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/audio_mux_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/breath_pacing_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/elevenlabs_adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/music_selection_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/narration_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/audio/voice_clone_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/autopilot_control_fabric.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/callback_verifier.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/control_plane.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/decision_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/final_timeline_builder.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_execution_window_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_orchestration_control_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_policy_promotion_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_post_plan_evaluation_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_scheduling_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/governance_step_cooldown_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/healthcheck_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/kill_switch.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/notification_plane.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/object_storage.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/observability_metrics.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/production/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/production/event_writer.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/production/status_rollup.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/production/timeline_repository.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/production/timeline_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/project_render_runtime.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/project_workspace_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/batch_builder.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/factory.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/kling_adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/prompt_normalizer.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/runway_adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/types.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_adapters/veo_adapter.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_callback_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_capability_registry.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_dispatchers/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_dispatchers/base.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_dispatchers/kling_dispatcher.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_dispatchers/runway_dispatcher.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_dispatchers/veo_dispatcher.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_ingress_signing.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_registry.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_router.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/provider_scene_planner.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_access_control.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_console_explainability.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_dashboard_summary.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_dispatch_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_events.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_fsm.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_incident_bulk_audit.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_incident_history.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_incident_projector.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_incident_saved_views.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_incident_work_surface.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_job_health.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_plan.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_poll_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_pollers/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_pollers/kling_poller.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_pollers/runway_poller.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_pollers/types.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_pollers/veo_poller.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_productivity_board.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_provider_registry.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_queue.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_repository.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_timeline_dedupe.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_timeline_poll_writer.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/render_timeline_writer.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/script_ingestion.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/script_preview_builder.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/script_preview_validation.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/script_regeneration.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/script_validation_issues.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/signed_url_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/state_transition_audit.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/storage_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/business_feedback_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/campaign_sync_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/contract_sla_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/directive_dispatcher.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/objective_translation_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/portfolio_allocator.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/repository.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/strategy_directive_bridge.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/strategy_ingestion_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/strategy_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/strategy/tradeoff_governance_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/subtitle_burner.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_analytics_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_batch_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_extraction_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_feedback_loop.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_generation_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_library_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_preview_builder.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_runtime_scoring.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/template_scoring_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/veo_workspace_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/services/video_merger.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/state.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/__init__.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/audio_mix_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/autopilot_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/business_outcome_rollup_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/celery_app.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/music_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/narration_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/objective_rollup_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/portfolio_rebalance_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/render_dispatch_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/render_poll_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/render_postprocess_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/render_tasks.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/strategy_mode_expiry_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/strategy_refresh_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/stuck_job_recovery_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_analytics_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_batch_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_extraction_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_feedback_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_generation_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_rescore_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/template_worker_common.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/video_mux_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/app/workers/voice_clone_worker.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/docker-compose.dev.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/docs/migration_review_policy.md",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/docs/migration_workflow.md",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/docs/zero_downtime_migration_checklist.md",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/pytest.ini",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/requirements.txt",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/bootstrap-env.sh",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/check_autogenerate_clean.py",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/check_migration_head.py",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/check_missing_migration.py",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/start-api.sh",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/start-beat.sh",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/start-worker.sh",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/scripts/wait_for_postgres.py",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/seed_mock_job.py",
+      "classification": "executable-support"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_audio_api_schemas.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_audio_mix_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_autopilot_control_fabric.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_autopilot_kill_switch.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_breath_pacing_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_control_plane_and_decision_fabric.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_decision_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_objective_translation_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_observability_notification_plane.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_portfolio_allocator.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_production_api.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_production_timeline_rollup.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_production_timeline_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_provider_adapters.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_provider_callback_service.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_provider_ingress_signing.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_smoke_imports.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_strategy_api.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_strategy_directive_bridge.py",
+      "classification": "executable"
+    },
+    {
+      "path": "backend/tests/test_tradeoff_governance_engine.py",
+      "classification": "executable"
+    },
+    {
+      "path": "docker-compose.yml",
+      "classification": "executable-support"
+    },
+    {
+      "path": "docs/AUDIO_STUDIO_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/AUTONOMOUS_CONTROL_FABRIC_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/BRANCH_PROTECTION_MAP_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/CI_FULL_STACK_E2E_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/CONTINUATION_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/CONTROL_FABRIC_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/DECISION_ENGINE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/DEPENDENCIES.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/DEPLOYMENT.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/E2E_CHECKLIST.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/EDGE_RELAY_AND_LIVE_SMOKE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/ENTERPRISE_STRATEGY_PATCH_2026-04-12.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/FRONTEND_DASHBOARD_PLANE_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/FRONTEND_INCIDENT_DRAWER_AND_RECONCILIATION_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/FRONTEND_OPERATIONAL_PANEL_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/INCIDENT_HISTORY_AND_NOTE_PERSISTENCE_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/INCIDENT_PROJECTION_RESOLVE_REOPEN_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/INCIDENT_WORK_SURFACE_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/INCIDENT_WORK_SURFACE_PHASE2_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/INCIDENT_WORK_SURFACE_PHASE3_GOVERNANCE_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/LOCAL_DEV.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/MERGE_ALL_PHASES_MANIFEST_2026-04-11.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/MERGE_ALL_PHASES_PROVENANCE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/MIGRATION_HEADS_CHECK_2026-04-11.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/OBSERVABILITY_NOTIFICATION_PLANE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PLAYWRIGHT_DASHBOARD_OPS_SUITE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PLAYWRIGHT_E2E_DEEP_ASSERTIONS_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PLAYWRIGHT_E2E_LOCAL_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PLAYWRIGHT_INCIDENT_ACTIONS_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/POST_MERGE_HARDENING_RESULTS_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PRODUCTION_TIMELINE_PATCH_2026-04-12.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PROVIDER_CALLBACK_RELAY_SMOKE_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/PROVIDER_PRODUCTION_READY_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/RENDER_CORE_SYSTEM_SPEC_20260412.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/REQUIRED_STATUS_STRATEGY_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/RUNBOOK_POST_MERGE.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/SCRIPT_UPLOAD_PREVIEW_CONSOLE_SPEC_20260412.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/SOURCE_PROVENANCE.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEAM_OPERATIONS_CONSOLE_PHASE4_PATCH_2026-04-11(1).md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEAM_OPERATIONS_CONSOLE_PHASE4_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEAM_OPERATIONS_CONSOLE_PHASE5_EXPLAINABILITY_PATCH_2026-04-11(1).md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEAM_OPERATIONS_CONSOLE_PHASE5_EXPLAINABILITY_PATCH_2026-04-11.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEMPLATE_FACTORY_LAYER_SPEC_20260412.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/TEMPLATE_SCORING_MEMORY_SPEC_20260412.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/README.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/api/deps.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/api/v1/templates.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/db/base.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/db/models/template_factory.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/main.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/repositories/template_factory_repo.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/schemas/template_factory.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_analytics_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_batch_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_extraction_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_generation_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_library_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/services/template_scoring_service.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/workers/celery_app.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/workers/template_analytics_worker.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/workers/template_batch_worker.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/workers/template_extraction_worker.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/backend/app/workers/template_generation_worker.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.analytics.snapshot.created.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.batch.completed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.batch.progressed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.batch.requested.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.extract.completed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.extract.failed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.extract.requested.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.generate.completed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.generate.failed.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/events/template.generate.requested.json",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/app/templates/[id]/page.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/app/templates/batch/page.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/app/templates/extractions/[id]/page.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/app/templates/page.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateAnalyticsPanel.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateBatchRunner.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateDetail.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateExtractionReview.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateGenerateForm.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/frontend/src/components/TemplateLibrary.tsx",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/openapi/template_factory.openapi.yaml",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/sql/001_template_factory_layer.sql",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/template_factory/structure/TEMPLATE_FACTORY_STRUCTURE.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/uploaded/frontend_production_timeline_operator_actions_alerts.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/uploaded/frontend_queue_saved_views_workload_telemetry.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/uploaded/phase_3_backend_core_patch_ready.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/uploaded/template_extraction_phase/backend_app_models_template_runtime.py",
+      "classification": "reference-only"
+    },
+    {
+      "path": "docs/specs/uploaded/video_veo_batch_scheduler_runtime.md",
+      "classification": "reference-only"
+    },
+    {
+      "path": "e2e/Dockerfile",
+      "classification": "executable"
+    },
+    {
+      "path": "e2e/package.json",
+      "classification": "executable"
+    },
+    {
+      "path": "e2e/playwright.config.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "e2e/tests/render-job-edge-relay.spec.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "e2e/tsconfig.json",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/cloud_run_relay/.dockerignore",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/cloud_run_relay/Dockerfile",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/cloud_run_relay/README.md",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/cloud_run_relay/main.py",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/cloud_run_relay/requirements.txt",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/nginx/README.md",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/nginx/nginx.conf",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/ngrok/ngrok.example.yml",
+      "classification": "executable"
+    },
+    {
+      "path": "edge/ngrok/start_ngrok.sh",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/.dockerignore",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/.env.local",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/.env.local.example",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/Dockerfile",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/next-env.d.ts",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/next.config.js",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/package.json",
+      "classification": "executable-support"
+    },
+    {
+      "path": "frontend/src/app/api/render-jobs/[jobId]/snapshot/route.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/audio/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/autopilot/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/dashboard/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/globals.css",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/layout.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/projects/[id]/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/projects/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/render-jobs/[id]/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/render-jobs/[jobId]/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/render-jobs/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/script-upload/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/strategy/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/templates/[id]/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/templates/batch/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/templates/extractions/[id]/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/templates/governance/scheduling/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/app/templates/page.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/DashboardShell.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/IncidentDrawer.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/InlineFieldError.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/PreviewEditingLayer.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/RealtimeProgressUI.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/ScriptUploadPreviewFlow.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/Sidebar.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/ToastViewport.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/ValidationPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/strategy/CampaignTimeline.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/strategy/DirectivePanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/strategy/PortfolioAllocationTable.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/strategy/SlaRiskHeatmap.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/strategy/StrategyStateCard.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/GovernanceOrchestrationControlPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/GovernanceSchedulePanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/PolicyPromotionPathPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/PostPlanEvaluationPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateAnalyticsPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateBatchRunner.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateCompetitionPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateDetail.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateExtractionReview.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateGenerateForm.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateLearningStatsPanel.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/components/templates/TemplateLibrary.tsx",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/hooks/useFieldRegistry.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/api.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/field-highlight.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/preview-editing.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/useProjectEvents.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/validation-field-key.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/src/lib/validation-map.ts",
+      "classification": "executable"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "classification": "executable-support"
+    },
+    {
+      "path": "scripts/ci/export_fail_fast_report.py",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/ci/export_quarantine_report.py",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/ci/wait_for_stack.py",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/smoke/kling_success.json",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/smoke/live_provider_e2e.py",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/smoke/runway_success.json",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/smoke/sign_relay.py",
+      "classification": "executable"
+    },
+    {
+      "path": "scripts/smoke/veo_success.json",
+      "classification": "executable"
+    }
+  ]
+}

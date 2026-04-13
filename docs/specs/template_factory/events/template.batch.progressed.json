@@ -1,0 +1,11 @@
+{
+  "event_name": "template.batch.progressed",
+  "version": "1.0.0",
+  "payload": {
+    "template_clone_job_id": "uuid",
+    "total": 10,
+    "completed": 4,
+    "failed": 1,
+    "queued": 5
+  }
+}

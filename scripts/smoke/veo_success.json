@@ -1,0 +1,15 @@
+{
+  "name": "operations/veo-demo-1",
+  "done": true,
+  "response": {
+    "generateVideoResponse": {
+      "generatedSamples": [
+        {
+          "video": {
+            "uri": "gs://demo-bucket/veo-demo-1.mp4"
+          }
+        }
+      ]
+    }
+  }
+}

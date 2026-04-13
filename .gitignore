@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+storage/
+backend/storage/
+frontend/.next/
+frontend/node_modules/
+*.log
+.pytest_cache/
+.mypy_cache/

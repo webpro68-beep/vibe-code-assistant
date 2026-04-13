@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Template Factory Layer API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/api/v1
+paths:
+  /templates/extract:
+    post:
+      summary: Extract template pack from a completed project
+      operationId: extractTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source_project_id]
+              properties:
+                source_project_id:
+                  type: string
+                  format: uuid
+                auto_publish:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Extraction queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateExtractionQueued"
+  /templates/extractions/{extraction_id}:
+    get:
+      summary: Get extraction status
+      operationId: getTemplateExtraction
+      parameters:
+        - in: path
+          name: extraction_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Extraction status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateExtraction"
+  /templates:
+    get:
+      summary: List templates
+      operationId: listTemplates
+      parameters:
+        - in: query
+          name: status
+          schema: {type: string}
+        - in: query
+          name: platform
+          schema: {type: string}
+        - in: query
+          name: type
+          schema: {type: string}
+        - in: query
+          name: min_score
+          schema: {type: number}
+        - in: query
+          name: search
+          schema: {type: string}
+      responses:
+        "200":
+          description: Template list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TemplatePack"
+    post:
+      summary: Create template pack
+      operationId: createTemplate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplatePackCreate"
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplatePack"
+  /templates/{template_id}:
+    get:
+      summary: Get template detail
+      operationId: getTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Template detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplatePackDetail"
+  /templates/{template_id}/publish:
+    post:
+      summary: Publish template
+      operationId: publishTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Published
+  /templates/{template_id}/archive:
+    post:
+      summary: Archive template
+      operationId: archiveTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Archived
+  /templates/{template_id}/versions:
+    post:
+      summary: Create new template version
+      operationId: createTemplateVersion
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                change_notes: {type: string}
+                config_json: {type: object}
+      responses:
+        "200":
+          description: Version created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateVersion"
+  /templates/{template_id}/versions/{version_id}/activate:
+    post:
+      summary: Activate template version
+      operationId: activateTemplateVersion
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+        - in: path
+          name: version_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Activated
+  /templates/{template_id}/generate:
+    post:
+      summary: Generate a project from template
+      operationId: generateFromTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplateGenerateRequest"
+      responses:
+        "200":
+          description: Usage run queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateUsageRunQueued"
+  /templates/{template_id}/batch-generate:
+    post:
+      summary: Batch generate projects from template
+      operationId: batchGenerateFromTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemplateBatchGenerateRequest"
+      responses:
+        "200":
+          description: Clone job queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateCloneJobQueued"
+  /templates/clone-jobs/{clone_job_id}:
+    get:
+      summary: Get template clone job
+      operationId: getTemplateCloneJob
+      parameters:
+        - in: path
+          name: clone_job_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Clone job
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateCloneJob"
+  /templates/{template_id}/analytics:
+    get:
+      summary: Get template analytics
+      operationId: getTemplateAnalytics
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateAnalytics"
+components:
+  schemas:
+    TemplatePackCreate:
+      type: object
+      required: [template_name]
+      properties:
+        template_name: {type: string}
+        template_type: {type: string, default: composite}
+        description: {type: string}
+        metadata_json: {type: object}
+    TemplatePack:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        template_name: {type: string}
+        template_type: {type: string}
+        status: {type: string}
+        reusability_score: {type: number}
+        performance_score: {type: number}
+        usage_count: {type: integer}
+        created_at: {type: string, format: date-time}
+        updated_at: {type: string, format: date-time}
+    TemplateVersion:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        template_pack_id: {type: string, format: uuid}
+        version_no: {type: integer}
+        is_active: {type: boolean}
+        change_notes: {type: string}
+        config_json: {type: object}
+    TemplatePackDetail:
+      allOf:
+        - $ref: "#/components/schemas/TemplatePack"
+        - type: object
+          properties:
+            active_version:
+              $ref: "#/components/schemas/TemplateVersion"
+            components:
+              type: array
+              items:
+                $ref: "#/components/schemas/TemplateComponent"
+    TemplateComponent:
+      type: object
+      properties:
+        component_type: {type: string}
+        component_id: {type: string, format: uuid}
+        component_role: {type: string}
+        metadata_json: {type: object}
+    TemplateExtractionQueued:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        status: {type: string}
+    TemplateExtraction:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        source_project_id: {type: string, format: uuid}
+        template_pack_id: {type: string, format: uuid}
+        status: {type: string}
+        extraction_report_json: {type: object}
+        score_json: {type: object}
+        error_json: {type: object}
+    TemplateGenerateRequest:
+      type: object
+      required: [input_slots]
+      properties:
+        input_slots:
+          type: object
+          additionalProperties: true
+        mode:
+          type: string
+          default: single
+        auto_render:
+          type: boolean
+          default: true
+        auto_upload:
+          type: boolean
+          default: false
+    TemplateUsageRunQueued:
+      type: object
+      properties:
+        template_usage_run_id: {type: string, format: uuid}
+        project_id: {type: string, format: uuid}
+        status: {type: string}
+    TemplateBatchGenerateRequest:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        auto_render:
+          type: boolean
+          default: true
+        auto_upload:
+          type: boolean
+          default: false
+    TemplateCloneJobQueued:
+      type: object
+      properties:
+        template_clone_job_id: {type: string, format: uuid}
+        status: {type: string}
+        count: {type: integer}
+    TemplateCloneJob:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        template_pack_id: {type: string, format: uuid}
+        mode: {type: string}
+        status: {type: string}
+        payload_json: {type: object}
+        result_json: {type: object}
+        error_json: {type: object}
+    TemplateAnalytics:
+      type: object
+      properties:
+        template_pack_id: {type: string, format: uuid}
+        usage_count: {type: integer}
+        render_success_rate: {type: number}
+        upload_success_rate: {type: number}
+        avg_retry_count: {type: number}
+        avg_generation_duration_sec: {type: number}
+        trend_json: {type: object}

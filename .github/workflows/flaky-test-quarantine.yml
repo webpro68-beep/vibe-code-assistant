@@ -1,0 +1,108 @@
+name: flaky-test-quarantine
+
+on:
+  workflow_dispatch:
+    inputs:
+      grep:
+        description: "Optional grep/filter for Playwright tests to quarantine-replay"
+        required: false
+        default: ""
+      shard:
+        description: "Optional artifact shard label"
+        required: false
+        default: "quarantine"
+  schedule:
+    - cron: "0 2 * * *"
+
+concurrency:
+  group: flaky-test-quarantine-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quarantine-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      PROVIDER_RELAY_SHARED_SECRET: replace-me
+      E2E_PROVIDER: runway
+      E2E_DELIVERY_MODE: edge-callback
+      CI: "true"
+      ARTIFACT_SHARD: quarantine-${{ github.event.inputs.shard || 'scheduled' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Cache npm + Playwright
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            e2e/node_modules
+            frontend/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-quarantine-${{ hashFiles('e2e/package-lock.json', 'frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-quarantine-
+
+      - name: Prepare env files
+        run: |
+          mkdir -p artifacts/playwright/${ARTIFACT_SHARD} artifacts/ci/${ARTIFACT_SHARD}
+          cp backend/.env.example backend/.env.dev || true
+          cp frontend/.env.local.example frontend/.env.local || true
+
+      - name: Build stack with cache
+        uses: docker/bake-action@v5
+        with:
+          files: ./docker-compose.yml
+          load: true
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+      - name: Start services
+        run: docker compose up -d postgres redis minio minio-init api worker beat flower frontend edge-relay
+
+      - name: Wait for healthchecks
+        run: python scripts/ci/wait_for_stack.py 300
+
+      - name: Install Playwright deps
+        run: |
+          cd e2e
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Replay flaky candidates
+        run: |
+          docker compose run --rm --profile e2e \
+            -e E2E_PROVIDER=${E2E_PROVIDER} \
+            -e E2E_DELIVERY_MODE=${E2E_DELIVERY_MODE} \
+            -e ARTIFACT_SHARD=${ARTIFACT_SHARD} \
+            playwright /bin/bash -lc "cd /workspace/e2e && npx playwright test --repeat-each=3 ${GREP:+--grep \"$GREP\"}"
+        env:
+          GREP: ${{ github.event.inputs.grep }}
+
+      - name: Export quarantine report
+        if: always()
+        run: |
+          ARTIFACT_SHARD=${ARTIFACT_SHARD} python scripts/ci/export_fail_fast_report.py
+          python scripts/ci/export_quarantine_report.py
+
+      - name: Upload quarantine artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flaky-quarantine-${{ github.run_id }}
+          path: |
+            artifacts/playwright/${{ env.ARTIFACT_SHARD }}/**
+            artifacts/ci/${{ env.ARTIFACT_SHARD }}/**
+            artifacts/ci/quarantine_report.md
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Tear down stack
+        if: always()
+        run: docker compose down -v

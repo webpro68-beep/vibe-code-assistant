@@ -1,0 +1,16 @@
+{
+  "event": "task.callback",
+  "request_id": "req_kling_1",
+  "data": {
+    "task_id": "task_kling_1",
+    "task_status": "succeed",
+    "task_result": {
+      "videos": [
+        {
+          "url": "https://cdn.example.com/kling.mp4",
+          "cover_url": "https://cdn.example.com/kling.jpg"
+        }
+      ]
+    }
+  }
+}

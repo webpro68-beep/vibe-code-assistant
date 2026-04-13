@@ -1,0 +1,1 @@
+TEMPLATE FACTORY LAYER — TECHNICAL SPEC\n\nImported as guidance/spec companion for merged template layer.\n

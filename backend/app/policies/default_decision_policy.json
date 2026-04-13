@@ -1,0 +1,62 @@
+{
+  "version": "2026-04-11",
+  "engine_name": "render_factory_decision_engine",
+  "rules": {
+    "queue_pressure": {
+      "enabled": true,
+      "queued_jobs_threshold": 3,
+      "processing_jobs_threshold": 5,
+      "action": "scale_worker",
+      "severity": "high",
+      "owner": "platform"
+    },
+    "provider_failure_surge": {
+      "enabled": true,
+      "window_hours": 24,
+      "failed_scene_threshold": 2,
+      "open_incident_threshold": 2,
+      "action": "switch_provider",
+      "severity": "critical",
+      "owner": "platform"
+    },
+    "release_guardrail": {
+      "enabled": true,
+      "critical_open_incident_threshold": 1,
+      "action": "block_release",
+      "severity": "critical",
+      "owner": "release_manager"
+    },
+    "operator_overload": {
+      "enabled": true,
+      "max_open_incidents_per_assignee": 5,
+      "action": "rebalance_queue",
+      "severity": "medium",
+      "owner": "team_lead"
+    }
+  },
+  "autopilot": {
+    "enabled": true,
+    "safe_auto_execute_decision_types": [
+      "scale_worker",
+      "switch_provider",
+      "block_release"
+    ],
+    "cooldown_minutes_by_decision_type": {
+      "scale_worker": 15,
+      "switch_provider": 30,
+      "block_release": 15,
+      "rebalance_queue": 60,
+      "ack_incident": 5,
+      "assign_incident": 5,
+      "resolve_incident": 5
+    },
+    "suppression_window_minutes": 30,
+    "release_unblock_minutes_after_last_critical_incident": 60,
+    "provider_override_default_expiry_minutes": 120,
+    "escalation": {
+      "provider_failure_surge_open_incident_threshold": 3,
+      "queue_pressure_queued_jobs_threshold": 6,
+      "critical_open_incident_threshold": 2
+    }
+  }
+}

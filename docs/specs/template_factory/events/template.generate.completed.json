@@ -1,0 +1,10 @@
+{
+  "event_name": "template.generate.completed",
+  "version": "1.0.0",
+  "payload": {
+    "template_usage_run_id": "uuid",
+    "template_pack_id": "uuid",
+    "project_id": "uuid",
+    "status": "queued"
+  }
+}
