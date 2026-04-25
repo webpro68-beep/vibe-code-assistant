@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from app.api import deps
+from app.db.session import get_db
 from app.services.governance_scheduling_service import GovernanceSchedulingService
 from app.services.governance_orchestration_control_service import GovernanceOrchestrationControlService
 from app.services.governance_post_plan_evaluation_service import GovernancePostPlanEvaluationService
@@ -41,7 +41,7 @@ class CancelPlanRequest(BaseModel):
 def schedule_plan(
     plan_id: str,
     payload: SchedulePlanRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernanceSchedulingService(db=db)
     try:
@@ -69,7 +69,7 @@ def schedule_plan(
 def pause_plan(
     plan_id: str,
     payload: PausePlanRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernanceOrchestrationControlService(db=db)
     try:
@@ -83,7 +83,7 @@ def pause_plan(
 def resume_plan(
     plan_id: str,
     payload: ResumePlanRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernanceOrchestrationControlService(db=db)
     try:
@@ -97,7 +97,7 @@ def resume_plan(
 def cancel_plan(
     plan_id: str,
     payload: CancelPlanRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernanceOrchestrationControlService(db=db)
     try:
@@ -110,7 +110,7 @@ def cancel_plan(
 @router.post("/templates/governance/execution-plans/{plan_id}/evaluate")
 def evaluate_plan(
     plan_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernancePostPlanEvaluationService(db=db)
     try:
@@ -131,7 +131,7 @@ def evaluate_plan(
 @router.get("/templates/governance/execution-plans/{plan_id}/evaluation")
 def get_plan_evaluation(
     plan_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernancePostPlanEvaluationService(db=db)
     row = service.get(plan_id=plan_id)
@@ -152,7 +152,7 @@ def get_plan_evaluation(
 @router.post("/templates/governance/execution-plans/{plan_id}/policy-path/evaluate")
 def evaluate_policy_path(
     plan_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernancePolicyPromotionService(db=db)
     try:
@@ -174,7 +174,7 @@ def evaluate_policy_path(
 @router.get("/templates/governance/execution-plans/{plan_id}/policy-path")
 def get_policy_path(
     plan_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ):
     service = GovernancePolicyPromotionService(db=db)
     row = service.get(plan_id=plan_id)

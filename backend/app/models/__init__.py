@@ -64,6 +64,12 @@ __all__ = [
     "TemplateScore",
     "TemplateMemory",
     "TemplateSelectionDecision",
+    "TemplateExtractionJob",
+    "TemplateExtractedDraft",
+    "TemplateCompetitionRecord",
+    "TemplateLearningStat",
+    "TemplateReusePreview",
+    "TemplateEvolutionEvent",
     "CharacterReferencePack",
     "CharacterReferenceImage",
     "VeoBatchRun",
@@ -73,6 +79,10 @@ __all__ = [
     "TemplateGovernanceStepCooldown",
     "TemplateGovernancePostPlanEvaluation",
     "TemplateGovernancePolicyPromotionPath",
+    "TemplateGovernanceExecutionPlan",
+    "TemplateGovernanceExecutionStep",
+    "TemplateGovernancePlanTimelineEvent",
+    "TemplateGovernanceActionOutcomeAnalytics",
 ]
 
 from app.models.worker_concurrency_override import WorkerConcurrencyOverride
@@ -118,7 +128,17 @@ from app.models.template_factory import (
     TemplateCloneJob,
 )
 
-from app.models.template_runtime import TemplateScore, TemplateMemory, TemplateSelectionDecision
+from app.models.template_runtime import (
+    TemplateScore,
+    TemplateMemory,
+    TemplateSelectionDecision,
+    TemplateExtractionJob,
+    TemplateExtractedDraft,
+    TemplateCompetitionRecord,
+    TemplateLearningStat,
+    TemplateReusePreview,
+    TemplateEvolutionEvent,
+)
 
 from app.models.veo_workspace import (
     CharacterReferencePack,
@@ -134,3 +154,9 @@ from app.models.template_governance_schedule import (
     TemplateGovernancePostPlanEvaluation,
     TemplateGovernancePolicyPromotionPath,
 )
+from app.models.template_governance_execution import (
+    TemplateGovernanceExecutionPlan,
+    TemplateGovernanceExecutionStep,
+    TemplateGovernancePlanTimelineEvent,
+)
+from app.models.template_governance_bulk_ops import TemplateGovernanceActionOutcomeAnalytics

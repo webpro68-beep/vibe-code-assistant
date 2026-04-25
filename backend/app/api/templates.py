@@ -22,7 +22,7 @@ router = APIRouter(prefix="/api/v1/templates", tags=["templates"])
 def extract_template(payload: TemplateExtractRequest, db: Session = Depends(get_db)):
     repo = TemplateFactoryRepository(db)
     extraction = TemplateExtractionService(repo).queue_extraction(payload.source_project_id, payload.auto_publish)
-        return {"id": str(extraction.id), "status": extraction.status}
+    return {"id": str(extraction.id), "status": extraction.status}
 
 @router.get("/extractions/{extraction_id}")
 def get_extraction(extraction_id: str, db: Session = Depends(get_db)):
@@ -42,7 +42,7 @@ def list_templates(status: str | None = None, db: Session = Depends(get_db)):
 def create_template(payload: TemplatePackCreate, db: Session = Depends(get_db)):
     repo = TemplateFactoryRepository(db)
     row = TemplateLibraryService(repo).create_template(payload.model_dump())
-        return row
+    return row
 
 @router.get("/{template_id}")
 def get_template(template_id: str, db: Session = Depends(get_db)):
@@ -62,7 +62,6 @@ def publish_template(template_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Template not found")
     pack.status = "published"
     repo.db.commit()
-    AuditService(db).log(actor_user_id=None, actor_email=None, action="template.publish", resource_type="template_pack", resource_id=str(pack.id), payload_json={"status": "published"})
     return {"status": "published"}
 
 @router.post("/{template_id}/archive")
@@ -73,7 +72,6 @@ def archive_template(template_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Template not found")
     pack.status = "archived"
     repo.db.commit()
-    AuditService(db).log(actor_user_id=None, actor_email=None, action="template.archive", resource_type="template_pack", resource_id=str(pack.id), payload_json={"status": "archived"})
     return {"status": "archived"}
 
 @router.post("/{template_id}/versions")
@@ -92,14 +90,12 @@ def activate_version(template_id: str, version_id: str, db: Session = Depends(ge
 def generate_template(template_id: str, payload: TemplateGenerateRequest, db: Session = Depends(get_db)):
     repo = TemplateFactoryRepository(db)
     run = TemplateGenerationService(repo).generate(template_id, payload.model_dump())
-    AuditService(db).log(actor_user_id=None, actor_email=None, action="template.generate", resource_type="template_usage_run", resource_id=str(run.id), payload_json=payload.model_dump(mode="json"))
     return {"template_usage_run_id": str(run.id), "project_id": str(run.project_id), "status": run.status}
 
 @router.post("/{template_id}/batch-generate")
 def batch_generate(template_id: str, payload: TemplateBatchGenerateRequest, db: Session = Depends(get_db)):
     repo = TemplateFactoryRepository(db)
     clone_job = TemplateBatchService(repo).queue_batch(template_id, payload.model_dump())
-    AuditService(db).log(actor_user_id=None, actor_email=None, action="template.batch", resource_type="template_clone_job", resource_id=str(clone_job.id), payload_json={"count": len(payload.items)})
     return {"template_clone_job_id": str(clone_job.id), "status": clone_job.status, "count": len(payload.items)}
 
 @router.get("/clone-jobs/{clone_job_id}")

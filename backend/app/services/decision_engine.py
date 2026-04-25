@@ -220,6 +220,32 @@ def execute_decision(
         return result
 
     if decision_type == "scale_worker":
+        has_explicit_override = (
+            action_payload.get("dispatch_batch_limit") is not None
+            or action_payload.get("poll_countdown_seconds") is not None
+        )
+        if not has_explicit_override and action_payload.get("recommended_worker_delta") is not None:
+            result = DecisionExecutionResult(
+                decision_type=decision_type,
+                status="planned_only",
+                summary="Worker scaling recommendation recorded in planned-only mode",
+                details={
+                    "recommended_worker_delta": action_payload.get("recommended_worker_delta"),
+                },
+            )
+            create_decision_audit_log(
+                db,
+                decision_type=decision_type,
+                actor=actor,
+                execution_status=result.status,
+                reason=reason,
+                action_payload=action_payload,
+                result=result.model_dump(),
+                policy_version=policy_version,
+                recommendation_key=recommendation_key,
+            )
+            return result
+
         row = set_worker_override(
             db,
             actor=actor,
