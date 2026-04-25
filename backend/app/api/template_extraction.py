@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import desc, func, select
 from sqlalchemy.orm import Session
 
-from app.api import deps
+from app.db.session import get_db
 from app.models.template_runtime import (
     TemplateCompetitionRecord,
     TemplateExtractedDraft,
@@ -65,7 +65,7 @@ class ExtractedTemplateListItem(BaseModel):
 def extract_template_from_project(
     project_id: str,
     payload: TemplateExtractionRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> ExtractionJobResponse:
     service = TemplateExtractionService(db=db)
     job = service.enqueue_or_get_existing(
@@ -83,7 +83,7 @@ def extract_template_from_project(
 @router.get("/template-extraction-jobs/{job_id}", response_model=ExtractionJobResponse)
 def get_template_extraction_job(
     job_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> ExtractionJobResponse:
     job = db.get(TemplateExtractionJob, job_id)
     if job is None:
@@ -97,7 +97,7 @@ def list_extracted_templates(
     platform: str | None = Query(default=None),
     ratio: str | None = Query(default=None),
     limit: int = Query(default=50, ge=1, le=200),
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> list[ExtractedTemplateListItem]:
     stmt = select(TemplateExtractedDraft).order_by(desc(TemplateExtractedDraft.created_at)).limit(limit)
 
@@ -115,7 +115,7 @@ def list_extracted_templates(
 @router.get("/templates/{template_id}/reuse-preview")
 def get_template_reuse_preview(
     template_id: str,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     builder = TemplatePreviewBuilder(db=db)
     try:
@@ -128,7 +128,7 @@ def get_template_reuse_preview(
 def build_template_reuse_preview(
     template_id: str,
     payload: TemplatePreviewRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     builder = TemplatePreviewBuilder(db=db)
     try:
@@ -141,7 +141,7 @@ def build_template_reuse_preview(
 def create_project_payload_from_template(
     template_id: str,
     payload: CreateProjectFromTemplateRequest,
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     builder = TemplatePreviewBuilder(db=db)
     try:
@@ -158,7 +158,7 @@ def create_project_payload_from_template(
 def get_template_competition(
     template_id: str,
     scope_key: str | None = Query(default=None),
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     stmt = select(TemplateCompetitionRecord).where(TemplateCompetitionRecord.template_id == template_id)
     if scope_key:
@@ -205,7 +205,7 @@ def get_template_competition(
 def get_template_learning_stats(
     template_id: str,
     scope_key: str | None = Query(default=None),
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     stmt = select(TemplateLearningStat).where(TemplateLearningStat.template_id == template_id)
     if scope_key:
@@ -275,7 +275,7 @@ def get_template_learning_stats(
 def explain_template(
     template_id: str,
     scope_key: str | None = Query(default=None),
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     stats_stmt = select(TemplateLearningStat).where(TemplateLearningStat.template_id == template_id)
     comp_stmt = select(TemplateCompetitionRecord).where(TemplateCompetitionRecord.template_id == template_id)
@@ -335,7 +335,7 @@ def explain_template(
 def get_dominant_replacement_candidates(
     scope_key: str | None = Query(default=None),
     min_sample_count: int = Query(default=5, ge=1),
-    db: Session = Depends(deps.get_db),
+    db: Session = Depends(get_db),
 ) -> dict[str, Any]:
     stmt = select(TemplateLearningStat).where(TemplateLearningStat.sample_count >= min_sample_count)
     if scope_key:

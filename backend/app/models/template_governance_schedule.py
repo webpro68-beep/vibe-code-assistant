@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from sqlalchemy import DateTime, Float, Index, Integer, JSON, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.db.base_class import Base
+from app.db.base import Base
 
 
 def utcnow() -> datetime:
@@ -25,7 +25,7 @@ class TemplateGovernanceSchedule(Base):
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     plan_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
 
-    schedule_status: Mapped[str] = mapped_column(String(32), nullable=False, default="unscheduled", index=True)
+    schedule_status: Mapped[str] = mapped_column(String(32), nullable=False, default="unscheduled")
     scheduled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     execution_window_start: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     execution_window_end: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -49,7 +49,7 @@ class TemplateGovernanceOrchestrationControl(Base):
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     plan_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
 
-    control_status: Mapped[str] = mapped_column(String(32), nullable=False, default="active", index=True)
+    control_status: Mapped[str] = mapped_column(String(32), nullable=False, default="active")
     pause_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     cancel_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
 
@@ -79,7 +79,7 @@ class TemplateGovernanceStepCooldown(Base):
 
     cooldown_seconds: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     next_eligible_run_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
-    cooldown_status: Mapped[str] = mapped_column(String(32), nullable=False, default="ready", index=True)
+    cooldown_status: Mapped[str] = mapped_column(String(32), nullable=False, default="ready")
 
     last_started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     last_finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -99,8 +99,8 @@ class TemplateGovernancePostPlanEvaluation(Base):
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     plan_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
 
-    status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending", index=True)
-    outcome_label: Mapped[str] = mapped_column(String(32), nullable=False, default="unknown", index=True)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="pending")
+    outcome_label: Mapped[str] = mapped_column(String(32), nullable=False, default="unknown")
 
     before_metrics_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     after_metrics_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
@@ -126,7 +126,7 @@ class TemplateGovernancePolicyPromotionPath(Base):
     plan_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
 
     path_type: Mapped[str] = mapped_column(String(32), nullable=False, default="hold")
-    status: Mapped[str] = mapped_column(String(32), nullable=False, default="recommended", index=True)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="recommended")
 
     confidence_delta: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     approval_requirement_delta: Mapped[int] = mapped_column(Integer, nullable=False, default=0)

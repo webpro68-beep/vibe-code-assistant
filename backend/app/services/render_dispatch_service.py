@@ -13,6 +13,19 @@ from app.services.provider_router import submit_render_task
 # =========================
 # Helpers
 # =========================
+def get_dispatch_runtime_override() -> dict[str, Any]:
+    db = SessionLocal()
+    try:
+        override = get_or_create_worker_override(db)
+        return {
+            "enabled": bool(override.enabled),
+            "dispatch_batch_limit": int(override.dispatch_batch_limit),
+            "poll_countdown_seconds": int(override.poll_countdown_seconds),
+        }
+    finally:
+        db.close()
+
+
 def _safe_json_loads(value: str | None) -> dict[str, Any]:
     if not value:
         return {}
@@ -207,6 +220,12 @@ def build_scene_dispatch_payload(provider: str, request_payload_json: str) -> di
 # =========================
 async def dispatch_scene_task(provider: str, request_payload_json: str) -> NormalizedSubmitResult:
     normalized_provider = _normalize_provider_name(provider)
+    db = SessionLocal()
+    try:
+        effective_provider, _ = resolve_effective_provider(db, normalized_provider)
+    finally:
+        db.close()
+    normalized_provider = _normalize_provider_name(effective_provider)
     scene_payload = build_scene_dispatch_payload(normalized_provider, request_payload_json)
     callback_url = _build_callback_url(normalized_provider)
 
